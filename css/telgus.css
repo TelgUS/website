@@ -1,0 +1,25 @@
+#main_articles {
+	width: 79%;
+	padding-right: 1%;
+	float: left;
+}
+
+#side_news {
+	width: 20%;
+	float: right;
+}
+
+.navbar {
+//	background-color: #BDBDBD;
+	font-weight: bold;
+}
+
+@media only screen and (max-width: 480px) {
+	#main_articles {
+		width: 100%;
+	}
+
+	#side_news {
+		display: none;
+	}
+}
