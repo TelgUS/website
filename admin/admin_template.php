@@ -1,8 +1,5 @@
 <?PHP
-session_start ();
-if (! (isset ( $_SESSION ['login'] ) && $_SESSION ['login'] != '')) {
-	header ( "Location: login.php" );
-}
+require_once 'session.php'; // check whether the user is logged in
 ?>
 
 <head>

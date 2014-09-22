@@ -26,9 +26,15 @@ if (empty ( $_POST ["end_date"] )) {
 	$end_date = $_POST ["end_date"];
 }
 
+if (empty ( $_POST ['comments_allowed_flag'] )) {
+	$comments_allowed_flag = "N";
+} else {
+	$comments_allowed_flag = "Y";
+}
+
 $con = db_connect ();
-$stmt = mysqli_prepare ( $con, "INSERT INTO articles (title, text, start_date, end_date) VALUES (?, ?, ?, ?)" );
-mysqli_stmt_bind_param ( $stmt, "ssss", $_POST ['article_title'], $_POST ['article_text'], $start_date, $end_date );
+$stmt = mysqli_prepare ( $con, "INSERT INTO articles (title, text, start_date, end_date, comments_allowed_flag) VALUES (?, ?, ?, ?, ?)" );
+mysqli_stmt_bind_param ( $stmt, "ssss", $_POST ['article_title'], $_POST ['article_text'], $start_date, $end_date, $comments_allowed_flag );
 mysqli_stmt_execute ( $stmt );
 $rows_inserted = mysqli_stmt_affected_rows ( $stmt );
 
@@ -40,53 +46,12 @@ if ($rows_inserted <= 0) {
 
 db_disconnect ( $con );
 
+if ($rows_inserted <= 0) {
+	Location:
+	"article_fail.php";
+} else {
+	Location:
+	"article_success.php?id=" . $article_id;
+}
+
 ?>
-
-<head>
-	<?php require_once "../head.php"; ?>
-	<title><?php echo MY_COMPANY; ?>: New Article</title>
-</head>
-
-<body>
-	<div class="container">
-		<div class="content">
-		<?php require_once 'admin_menu.php';?>
-
-		<?php if ($rows_inserted <= 0) {?>
-			<div class="alert alert-danger" role="alert">
-				<p>
-					<strong>Error!</strong> Failed to create article.  <?php echo $insert_error; ?></p>
-			</div>
-		<?php } else {?>
-			<div class="alert alert-warning alert-dismissible" role="alert">
-				<button type="button" class="close" data-dismiss="alert">
-					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-				</button>
-				<strong>Warning!</strong> Do not refresh this page.  If you do, it will create the article again.
-			</div>
-			<div class="alert alert-success" role="alert">
-				<p>
-					<strong>Saved!</strong>  <?php echo $rows_inserted; ?> article(s) created successfully.</p>
-			</div>
-
-			<p>
-				To view the article you created, <a
-					href="/article.php?id=<?php echo $article_id; ?>">click here</a>.
-			</p>
-			<p>To create another article, <a href="/admin/new_article.php">click here</a>.</p>
-		<?php } ?>
-		</div>
-		<!-- content -->
-		<?php require_once "../footer.php"; ?>
-
-	</div>
-	<!-- container -->
-
-
-	<!-- The below script highlights the menu selection -->
-	<script>
-	$("#menu_<selection>").addClass("active");
-	</script>
-
-</body>
-</html>

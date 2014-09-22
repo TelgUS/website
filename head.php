@@ -8,16 +8,16 @@ define ( "MY_COMPANY", "TelgUS" );
 <meta name="author" content="Praveen Gattu">
 
 <!-- Bootstrap -->
-<!--  the below stylesheet is the default theme for bootstrap 
-<link href="/css/bootstrap.min.css" rel="stylesheet"> -->
+<!--  the below stylesheet is the default theme for bootstrap -->
+<link href="/css/bootstrap.min.css" rel="stylesheet">
 <!--  the below stylesheet is the Flatly theme for bootstrap from bootswatch 
 <link href="http://bootswatch.com/flatly/bootstrap.min.css" rel="stylesheet"> -->
 <!--  the below stylesheet is the Amelia theme for bootstrap from bootswatch
 <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/amelia/bootstrap.min.css" rel="stylesheet"> -->
 <!--  the below stylesheet is the Cosmo theme for bootstrap from bootswatch 
 <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/cosmo/bootstrap.min.css" rel="stylesheet"> -->
-<!--  the below stylesheet is the Darkly theme for bootstrap from bootswatch -->
-<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/darkly/bootstrap.min.css" rel="stylesheet">
+<!--  the below stylesheet is the Darkly theme for bootstrap from bootswatch
+<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/darkly/bootstrap.min.css" rel="stylesheet"> -->
 <!--  the below stylesheet is the Simplex theme for bootstrap from bootswatch
 <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/simplex/bootstrap.min.css" rel="stylesheet"> -->
 <!--  the below stylesheet is the Spacelab theme for bootstrap from bootswatch
