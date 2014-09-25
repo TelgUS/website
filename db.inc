@@ -28,4 +28,5 @@ function get_sql_result($con, $sql) {
 
 	return $result;
 }
+
 ?>
