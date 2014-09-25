@@ -8,9 +8,9 @@ require_once 'session.php';
 </head>
 
 <body>
+	<?php require_once 'admin_menu.php';?>
 
 	<div class="container">
-		<?php require_once 'admin_menu.php';?>
 
 		<div class="content">
 			<h2>Admin Dashboard</h2>
@@ -19,10 +19,10 @@ require_once 'session.php';
 		</div>
 		<!-- content -->
 
-		<?php require_once "../footer.php"; ?>
 	</div>
 	<!-- container -->
 
+	<?php require_once "admin_footer.php"; ?>
 
 	<!-- The below script highlights the menu selection -->
 	<script>

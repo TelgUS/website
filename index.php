@@ -1,108 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
-<?php require_once 'db.inc'; ?>
+<?php
+require_once 'db.inc';
+$articles_per_page = 5;
+$page = 1;
+
+// determine page number and offset
+if (isset ( $_GET ['page'] )) {
+	$page = $_GET ['page'];
+}
+?>
 
 <head>
 	<?php require_once "head.php"; ?>
 	<title><?php echo MY_COMPANY; ?>: Home</title>
+
 </head>
 
 <body>
+	<?php require_once '/menu.php';?>
 	<div class="container">
 
-	    <?php require_once '/menu.php';?>
-
 		<div class="content">
-			<section id="main_articles">
-				<h2>Articles</h2>
-	  		<?php
-					$articles_per_page = 5;
-					$page = 1;
-					
-					// determine page number and offset
-					if (isset ( $_GET ['page'] )) {
-						$page = $_GET ['page'];
-					}
-					$articles_displayed_count = $page * $articles_per_page;
-					
-					$prev_page = $page - 1;
-					$next_page = $page + 1;
-					$offset = $articles_per_page * ($page - 1);
-					
-					$con = db_connect ();
+			<?php
+			// Show Jumbotron in page 1 only
+			if ($page == 1) {
+				?>
+			<div class="jumbotron" style="background-image: url('');">
+				<h1>Hello, world!</h1>
+				<p>This section will have the upcoming movies and events in a
+					carousel.</p>
+				<p>
+					<a class="btn btn-primary btn-lg" role="button">Learn more</a>
+				</p>
+			</div>
+			<?php } // end Jumbotron display ?>
 
-					$sql = "SELECT count(*) FROM articles
+			<section class="main_articles">
+	  			<?php
+						$articles_displayed_count = $page * $articles_per_page;
+						
+						$prev_page = $page - 1;
+						$next_page = $page + 1;
+						$offset = $articles_per_page * ($page - 1);
+						
+						$con = db_connect ();
+						
+						$sql = "SELECT count(*) FROM articles
 							WHERE sysdate() BETWEEN start_date AND ifnull(end_date, '9999-12-31')";
-					$result = get_sql_result ( $con, $sql );
-					$row = mysqli_fetch_row ( $result );
-					$articles_count = $row [0];
-					
-					// get articles for current page
-					$sql = "SELECT title, text, start_date
+						$result = get_sql_result ( $con, $sql );
+						$row = mysqli_fetch_row ( $result );
+						$articles_count = $row [0];
+						
+						// get articles for current page
+						$sql = "SELECT article_id, title, text, start_date
 							FROM  articles
 							WHERE sysdate() BETWEEN start_date AND ifnull(end_date, '9999-12-31')
 							ORDER BY start_date DESC, article_id DESC
 							LIMIT $articles_per_page OFFSET $offset";
-					$result = get_sql_result ( $con, $sql );
-					
-					while ( $row = mysqli_fetch_array ( $result ) ) {
-						echo "<article class='panel panel-default'>\n";
-						echo "  <header class='panel-heading'>\n";
-						echo "    <div class='row'>\n";
-						echo "      <div class='col-md-8'><h3>" . $row ['title'] . "</h3></div>\n";
-						echo "      <div class='col-md-4' style='text-align: right;'><small><time datetime='" . $row ['start_date'] . "'>" . $row ['start_date'] . "</time></small></div>\n";
-						echo "    </div>\n";
-						echo "  </header>\n";
-						echo "<div class='panel-body'>" . $row ['text'] . "\n</div>";
-						echo "</article>\n\n";
-					}
-					
-					// Previous page navigation
-					echo "<div class='row'>\n";
-					if ($prev_page < 1) {
-						// don't show Previous button
-						echo "<div class='col-md-6'>&nbsp;</div>\n";
-					} else {
-						// show Previous button
-						echo "<div class='col-md-6'><a href='index.php?page=$prev_page'>
-								<button type='button' class='btn btn-default btn-large'>
-								Previous</button></a></div>\n";
-					}
-					
-					// Next page navigation
-					if ($articles_displayed_count >= $articles_count) {
-						// don't show Next button
-						echo "<div class='col-md-6'>&nbsp;</div>\n";
-					} else {
-						// show Next button
-						echo "<div class='col-md-6' style='text-align: right;'>
-								<a href='index.php?page=$next_page'>
-								<button type='button' class='btn btn-primary btn-large'>Next</button></a></div>\n";
-					}
-					echo "</div>\n";
-					
-					db_disconnect ( $con );
-					
-					/*
-					 * echo "<p style='text-align: center;'>\n"; echo "page: $page<br>"; if ($page > 0) { $last = $page - 2; echo "<a href=\"index.php?page=$last\">Last</a> |"; echo "<a href=\"index.php?page=$page\">Next</a>"; echo "<br>page > 0, last: $last , page: $page"; } else if ($page == 0) { echo "<a href=\"index.php?page=$page\">Next</a>"; echo "<br>page == 0, page: $page"; } else if ($left_article < $articles_per_page) { $last = $page - 2; echo "<a href=\"index.php?page=$last\">Last</a>"; echo "<br>left_article < articles_per_page, page: $page"; } echo "</p>\n";
-					 */
-					?>
+						$result = get_sql_result ( $con, $sql );
+						
+						while ( $row = mysqli_fetch_array ( $result ) ) {
+							// user comments count
+							$sql = "SELECT count(*) FROM article_comments WHERE article_id = " . $row ['article_id'];
+							$comments_result = get_sql_result ( $con, $sql );
+							$comments_row = mysqli_fetch_row ( $comments_result );
+							$comments_count = $comments_row [0];
+							
+							// images count
+							$sql = "SELECT count(*) FROM article_images WHERE article_id = " . $row ['article_id'];
+							$images_result = get_sql_result ( $con, $sql );
+							$images_row = mysqli_fetch_row ( $images_result );
+							$images_count = $images_row [0];
+							
+							echo "<article class='panel panel-default'>\n";
+							echo "  <header class='panel-heading'>\n";
+							echo "    <div class='row'>\n";
+							echo "      <div class='col-md-9'><a href='article.php?id=" . $row ['article_id'] . "'>" . $row ['title'] . "</a></div>\n";
+							echo "      <div class='col-md-1'>\n";
+							echo "          <div id='comments_" . $row ['article_id'] . "'><span class='glyphicon glyphicon-comment'> $comments_count</span></div>";
+							echo "      </div>\n";
+							echo "      <div class='col-md-1'>\n";
+							echo "          <div id='images_" . $row ['article_id'] . "'><span class='glyphicon glyphicon-camera'> $images_count</span></div>\n";
+							echo "      </div>\n";
+							echo "      <div class='col-md-1'>";
+							echo "        <small><time datetime='" . $row ['start_date'] . "'>" . date ( "m/d/y", strtotime ( $row ['start_date'] ) ) . "</time></small>\n";
+							echo "      </div>\n";
+							echo "    </div>\n";
+							echo "  </header>\n";
+							echo "<div class='panel-body'>" . $row ['text'] . "\n</div>";
+							echo "</article>\n\n";
+						}
+						
+						db_disconnect ( $con );
+						?>
+
+				<!-- Previous and Next nav buttons -->
+				<div class="btn-group btn-group-justified">
+					<div class="btn-group">
+						<?php
+						if ($prev_page < 1) {
+							echo "<button type='button' class='btn btn-default btn-lg' disabled>Previous</button>";
+						} else {
+							echo "<a href='index.php?page=$prev_page'><button type='button' class='btn btn-default btn-lg'>Previous</button></a>";
+						}
+						?>
+					</div>
+					<div class="btn-group">
+						<?php
+						if ($articles_displayed_count >= $articles_count) {
+							echo "<button type='button' class='btn btn-primary btn-lg' disabled>Next</button>";
+						} else {
+							echo "<a href='index.php?page=$next_page'><button type='button' class='btn btn-primary btn-lg'>Next</button></a>";
+						}
+						?>
+					</div>
+				</div>
+
 			</section>
 
-			<aside id="side_news">
+			<!-- Side News (on right) -->
+			<aside class="side_news">
 				<h3>Recent News!</h3>
 				<p>Some news that goes to the side</p>
 			</aside>
 
 		</div>
 		<!-- end content -->
-		
-		<?php require_once "/footer.php"; ?>
-		
+
 	</div>
 	<!-- end container -->
-
-
+	
+	<?php require_once "/footer.php"; ?>
+	
 	<!-- The below script highlights the menu selection -->
 	<script>
 	$("#menu_home").addClass("active");

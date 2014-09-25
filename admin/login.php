@@ -73,6 +73,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	  <P class="bg-danger"><?PHP print $errorMessage;?></P>
 	</div>
 
-	<?php require_once "../footer.php"; ?>
-  </body>
+	<?php require_once "admin_footer.php"; ?>
+</body>
 </html>

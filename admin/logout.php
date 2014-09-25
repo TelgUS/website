@@ -18,6 +18,6 @@
 	  <p>You have been logged out. Click to <a href="login.php">login</a>.</p>
 	</div>
 
-	<?php require_once "../footer.php"; ?>
-  </body>
+	<?php require_once "admin_footer.php"; ?>
+</body>
 </html>

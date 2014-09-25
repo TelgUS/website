@@ -5,12 +5,13 @@ require_once 'session.php';
 <head>
 	<?php require_once "../head.php"; ?>
 	<title><?php echo MY_COMPANY; ?>: New Article</title>
+
 </head>
 
 <body>
+	<?php require_once 'admin_menu.php';?>
 
 	<div class="container">
-		<?php require_once 'admin_menu.php';?>
 
     	<div id="content">
 			<h2>New Article</h2>
@@ -44,28 +45,29 @@ require_once 'session.php';
 					</div>
 				</div>
 
-				<!-- article start date -->
 				<div class="form-group">
+					<!-- article start date -->
 					<label for="start_date" class="col-sm-2 control-label">Start Date</label>
-					<div class="col-sm-10">
+					<div class="col-sm-4">
 						<input type="datetime" class="form-control" id="start_date"
 							name="start_date" placeholder="Start Date"
-							pattern="\d{4}-\d{1,2}-\d{1,2}"> <span class="help-block">This is
-							the date/time the article goes live on the website. If you don't
-							enter the start date, the current date/time will be used.</span>
+							pattern="\d{4}-\d{1,2}-\d{1,2} \d{1,2}:\d{2}:\d{2}"> <span
+							class="help-block">Format: yyyy-mm-dd hh24:mi:ss<br>This is the
+							date/time the article goes live on the website. If you don't
+							enter the start date, the current date/time will be used.
+						</span>
 					</div>
-				</div>
 
-				<!-- article end date -->
-				<div class="form-group">
+					<!-- article end date -->
 					<label for="end_date" class="col-sm-2 control-label">End Date</label>
-					<div class="col-sm-10">
+					<div class="col-sm-4">
 						<input type="datetime" class="form-control" id="end_date"
 							name="end_date" placeholder="End Date"
-							pattern="\d{4}-\d{1,2}-\d{1,2}"> <span class="help-block">This is
-							the date/time the article expires and won't be displayed on the
-							website. if you don't enter the end date, this article will never
-							expire.</span>
+							pattern="\d{4}-\d{1,2}-\d{1,2}"> <span class="help-block">Format:
+							yyyy-mm-dd hh24:mi:ss<br>This is the date/time the article
+							expires and won't be displayed on the website. if you don't enter
+							the end date, this article will never expire.
+						</span>
 					</div>
 				</div>
 
@@ -78,18 +80,29 @@ require_once 'session.php';
 							</label>
 						</div>
 					</div>
-				</div><br>
+				</div>
+				<br>
+
+				<!-- video URL -->
+				<div class="form-group">
+					<label for="video_url" class="col-sm-2 control-label">Video URL</label>
+					<div class="col-sm-10">
+						<input type="url" class="form-control" id="video_url"
+							name="video_url" placeholder="Video URL"> <span
+							class="help-block">Enter the video URL.</span>
+					</div>
+				</div>
 
 				<!-- image #1 (file and URL) -->
 				<div class="form-group">
 					<label for="image1_file" class="col-sm-2 control-label">Image #1
 						File</label>
-					<div class="col-sm-10">
+					<div class="col-sm-4">
 						<input type="file" class="form-control" id="image1_file"
 							name="image1_file"> <span class="help-block">Upload image #1.</span>
 					</div>
 					<label for="image1_url" class="col-sm-2 control-label">Image #1 URL</label>
-					<div class="col-sm-10">
+					<div class="col-sm-4">
 						<input type="url" class="form-control" id="image1_url"
 							name="image1_url" placeholder="Image #1 URL"> <span
 							class="help-block">Enter the URL for image #1. If you upload
@@ -101,26 +114,33 @@ require_once 'session.php';
 				<div class="form-group">
 					<label for="image2_file" class="col-sm-2 control-label">Image #2
 						File</label>
-					<div class="col-sm-10">
+					<div class="col-sm-4">
 						<input type="file" class="form-control" id="image2_file"
 							name="image2_file"> <span class="help-block">Upload image #2.</span>
 					</div>
 					<label for="image2_url" class="col-sm-2 control-label">Image #2 URL</label>
-					<div class="col-sm-10">
+					<div class="col-sm-4">
 						<input type="url" class="form-control" id="image2_url"
 							name="image2_url" placeholder="Image #2 URL"> <span
 							class="help-block">Enter the URL for image #2. If you upload
-							image #1 as a file also, this URL will be ignored.</span>
+							image #2 as a file also, this URL will be ignored.</span>
 					</div>
 				</div>
 
-				<!-- video URL -->
+				<!-- image #3 (file and URL) -->
 				<div class="form-group">
-					<label for="video_url" class="col-sm-2 control-label">Video URL</label>
-					<div class="col-sm-10">
-						<input type="url" class="form-control" id="video_url"
-							name="video_url" placeholder="Video URL"> <span
-							class="help-block">Enter the video URL.</span>
+					<label for="image3_file" class="col-sm-2 control-label">Image #3
+						File</label>
+					<div class="col-sm-4">
+						<input type="file" class="form-control" id="image3_file"
+							name="image3_file"> <span class="help-block">Upload image #3.</span>
+					</div>
+					<label for="image3_url" class="col-sm-2 control-label">Image #3 URL</label>
+					<div class="col-sm-4">
+						<input type="url" class="form-control" id="image3_url"
+							name="image3_url" placeholder="Image #3 URL"> <span
+							class="help-block">Enter the URL for image #3. If you upload
+							image #2 as a file also, this URL will be ignored.</span>
 					</div>
 				</div>
 
@@ -138,9 +158,10 @@ require_once 'session.php';
 		</div>
 		<!-- end content -->
 
-		<?php require_once "../footer.php"; ?>
 	</div>
 	<!-- end container -->
+
+	<?php require_once "admin_footer.php"; ?>
 
 	<!-- The below script highlights the menu selection -->
 	<script>
@@ -182,14 +203,19 @@ require_once 'session.php';
 	        $(outputID).show();
 	        return false;
 		}
+
+		return true;
 	} // end function checkImage
 
 	//function to check file size before uploading.
 	function checkForm() {
 		// check whether browser fully supports all File API
 		if (!checkImage("Image 1", "#image1_file", "#output")) {
+			alert("check image failed");
 			return false;
 		}
+
+		return true;
 	}
 	</script>
 </body>
