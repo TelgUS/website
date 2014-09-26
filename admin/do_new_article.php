@@ -1,6 +1,7 @@
 <?PHP
 require_once 'session.php';
 require_once '../db.inc';
+require_once "resize_image.php";
 
 // check article title
 if (empty ( $_POST ["article_title"] )) {
@@ -58,7 +59,7 @@ save_image ( $con, $article_id, 3, $_FILES ['image3_file'], $_POST ['image3_url'
 db_disconnect ( $con );
 
 if ($rows_inserted > 0) {
-	header ( "Location: new_article_success.php?id=" . $article_id );
+	// header ( "Location: new_article_success.php?id=" . $article_id );
 } else {
 	header ( "Location: new_article_fail.php" );
 }
@@ -66,18 +67,21 @@ if ($rows_inserted > 0) {
 // Saves an image to the "media" directory and creates a row in
 // article_images table with metadata.
 function save_image($con, $article_id, $image_index, $image_file, $image_url) {
-	if (! empty ( $image_url )) {
-		// download the image to $image_file
-	}
+	$image_dir = "../media/";
 	
 	if (! empty ( $image_file ['name'] )) {
-		// directory where images will be saved
-		$target = "../media/";
 		$image_extn = pathinfo ( $image_file ['name'], PATHINFO_EXTENSION );
-		$target = $target . "/" . $article_id . "-" . $image_index . "." . $image_extn;
 		
+		// generate names for the image files
+		$orig_file_name = $image_dir . $article_id . "-" . $image_index . "-orig." . $image_extn;
+		$resized_file_name = $image_dir . $article_id . "-" . $image_index . "." . $image_extn;
+		echo $image_file ['tmp_name'] . "\n";
+
 		// Writes the photo to the server
-		if (move_uploaded_file ( $image_file ['tmp_name'], $target )) {
+		if (move_uploaded_file ( $image_file ['tmp_name'], '../media/x.jpg' )) {
+			// resize file name
+			// resize_image ( $orig_file_name, $resized_file_name );
+			
 			// save image metadata to the database
 			$stmt = mysqli_prepare ( $con, "INSERT INTO article_images (article_id, image_file_name) VALUES (?, ?)" ) or die ( "Unable to prepare SQL statement to save image metadata" );
 			mysqli_stmt_bind_param ( $stmt, "is", $article_id, $target ) or die ( "Unable to bind parameters to save image metadata" );
@@ -88,8 +92,28 @@ function save_image($con, $article_id, $image_index, $image_file, $image_url) {
 		} else {
 			return false;
 		}
+	} else {
+		if (! empty ( $image_url )) {
+			// download the image to $image_file
+			
+			return true; // or false
+		}
 	}
 	
 	return true;
 } // end function save_image
+  
+// function to resize images
+function resize_image($orig_file_name, $resized_file_name) {
+	
+	// *** 1) Initialise / load image
+	$resizeObj = new resize ( $orig_file_name );
+	
+	// *** 2) Resize image (options: exact, portrait, landscape, auto, crop)
+	$resizeObj->resizeImage ( 200, 200, 'crop' );
+	
+	// *** 3) Save image
+	$resizeObj->saveImage ( $resized_file_name, 100 );
+} // end resize_image
+
 ?>

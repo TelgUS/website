@@ -18,13 +18,14 @@ require_once 'session.php'; // Check whether the user is logged in
 
 			<div class="alert alert-success" role="alert">
 				<p>
-					<strong>Done!</strong> Removed the article and information related to the article.
+					<strong>Done!</strong> Removed the article and information related
+					to the article.
 				</p>
 			</div>
 
 			<p>
-				To remove another article, <a href="/admin/remove_article.php">click
-					here</a>.
+				<a href="/admin/remove_article.php"><button class="btn btn-danger">Remove
+						another Article</button></a>
 			</p>
 
 		</div>

@@ -1,3 +1,11 @@
+<?php
+$redirect = "index.php";
+
+if (! empty ( $_GET ['redirect'] )) {
+	$redirect = $_GET ['redirect'];
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,7 +26,8 @@
 				name="pswd" type="password" class="form-control"
 				placeholder="Password" maxlength="16" required> <label
 				class="checkbox"> <!-- <input type="checkbox" value="remember-me">Remember me -->
-			</label>
+			</label> <input type="hidden" name="redirect"
+				value="<?php echo $redirect; ?>">
 			<button class="btn btn-lg btn-primary btn-block" type="submit">Sign
 				in</button>
 		</form>

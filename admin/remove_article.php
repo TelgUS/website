@@ -21,13 +21,13 @@ require_once 'session.php'; // check whether the user is logged in
 				from the site, edit the article and set an End Date.</p>
 
 			<form class="form-inline" role="form" method="post"
-				action="delete_article.php">
+				action="do_remove_article.php">
 				<div class="form-group">
 					<label class="sr-only" for="article_id">Article ID</label> <input
 						type="text" class="form-control" id="article_id" name="article_id"
 						placeholder="Article ID" required>
 				</div>
-				<button type="submit" class="btn btn-primary">Remove</button>
+				<button type="submit" class="btn btn-danger">Remove</button>
 			</form>
 		</div>
 		<!-- content -->

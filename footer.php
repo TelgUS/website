@@ -16,15 +16,25 @@
 				<a href="#">Jobs</a>
 			</p>
 		</div>
+
 		<div class='col-md-4'>
 			<h4>Events</h4>
 		</div>
+
 		<div class='col-md-4'>
 			<h4>Contact</h4>
-			<p><a href="#">Advertise</a></p>
-			<p><a href="#">Media</a></p>
-			<p><a href="#">General</a></p>
-			<p><a href="#">Report Website Issues</a></p>
+			<p>
+				<a href="#">Advertise</a>
+			</p>
+			<p>
+				<a href="#">Media</a>
+			</p>
+			<p>
+				<a href="#">General</a>
+			</p>
+			<p>
+				<a href="#">Report Website Issues</a>
+			</p>
 		</div>
 	</div>
 	<p>&nbsp;</p>
