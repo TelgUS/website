@@ -39,8 +39,8 @@ $video_url = $_POST ['video_url'];
 $con = db_connect ();
 
 // Save the Article
-$stmt = mysqli_prepare ( $con, "INSERT INTO articles (title, text, start_date, end_date, comments_allowed_flag, video_url) VALUES (?, ?, ?, ?, ?, ?)" ) or die ( "Unable to prepare SQL statement" );
-mysqli_stmt_bind_param ( $stmt, "ssssss", $_POST ['article_title'], $_POST ['article_text'], $start_date, $end_date, $comments_allowed_flag, $video_url ) or die ( "Unable to bind parameters" );
+$stmt = mysqli_prepare ( $con, "INSERT INTO articles (title, text, start_date, end_date, comments_allowed_flag, video_url, search_keywords) VALUES (?, ?, ?, ?, ?, ?, ?)" ) or die ( "Unable to prepare SQL statement" );
+mysqli_stmt_bind_param ( $stmt, "sssssss", $_POST ['article_title'], $_POST ['article_text'], $start_date, $end_date, $comments_allowed_flag, $video_url, $_POST ['search_keywords'] ) or die ( "Unable to bind parameters" );
 mysqli_stmt_execute ( $stmt ) or die ( "Unable to execute SQL statement: " . mysqli_error ( $con ) );
 $rows_inserted = mysqli_stmt_affected_rows ( $stmt );
 

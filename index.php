@@ -6,7 +6,7 @@ $articles_per_page = 5;
 $page = 1;
 
 // determine page number and offset
-if (isset ( $_GET ['page'] )) {
+if (! empty ( $_GET ['page'] )) {
 	$page = $_GET ['page'];
 }
 ?>
@@ -26,7 +26,7 @@ if (isset ( $_GET ['page'] )) {
 			// Show Jumbotron in page 1 only
 			if ($page == 1) {
 				?>
-			<div class="jumbotron" style="background-image: url('');">
+			<div class="jumbotron">
 				<h1>Hello, world!</h1>
 				<p>This section will have the upcoming movies and events in a
 					carousel.</p>
@@ -35,7 +35,16 @@ if (isset ( $_GET ['page'] )) {
 				</p>
 			</div>
 			<?php } // end Jumbotron display ?>
-
+ <!-- HTML to write -->
+ <a href="#" data-toggle="tooltip" title="Some tooltip text!">Hover over me</a>
+ 
+ <!-- Generated markup by the plugin -->
+ <div class="tooltip top" role="tooltip">
+   <div class="tooltip-arrow"></div>
+   <div class="tooltip-inner">
+     Some tooltip text!
+   </div>
+ </div>
 			<section class="main_articles">
 	  			<?php
 						$articles_displayed_count = $page * $articles_per_page;
@@ -78,10 +87,10 @@ if (isset ( $_GET ['page'] )) {
 							echo "    <div class='row'>\n";
 							echo "      <div class='col-md-9'><a href='article.php?id=" . $row ['article_id'] . "'>" . $row ['title'] . "</a></div>\n";
 							echo "      <div class='col-md-1'>\n";
-							echo "          <div id='comments_" . $row ['article_id'] . "'><span class='glyphicon glyphicon-comment'> $comments_count</span></div>";
+							echo "          <div id='comments_" . $row ['article_id'] . "' title='Comments' data-toggle='tooltip' data-placement='bottom'><a href='article.php?id=" . $row ['article_id'] . "'><span class='glyphicon glyphicon-comment'> $comments_count</span></a></div>";
 							echo "      </div>\n";
 							echo "      <div class='col-md-1'>\n";
-							echo "          <div id='images_" . $row ['article_id'] . "'><span class='glyphicon glyphicon-camera'> $images_count</span></div>\n";
+							echo "          <div id='images_" . $row ['article_id'] . "' title='Photos'><a href='article.php?id=" . $row ['article_id'] . "'><span class='glyphicon glyphicon-camera'> $images_count</span></a></div>\n";
 							echo "      </div>\n";
 							echo "      <div class='col-md-1'>";
 							echo "        <small><time datetime='" . $row ['start_date'] . "'>" . date ( "m/d/y", strtotime ( $row ['start_date'] ) ) . "</time></small>\n";

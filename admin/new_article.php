@@ -13,14 +13,14 @@ require_once 'session.php';
 
 	<div class="container">
 
-    	<div id="content">
+		<div class="content">
 			<h2>New Article</h2>
 
 			<p>Use the below form to enter a new article that would be displayed
 				on the home page, depending upon the start and end date/times.</p>
 
 			<form name="new" class="form-horizontal" role="form" method="post"
-				action="/admin/insert_article.php" enctype="multipart/form-data"
+				action="/admin/do_new_article.php" enctype="multipart/form-data"
 				onsubmit="return checkForm();">
 
 				<!-- article title -->
@@ -42,6 +42,22 @@ require_once 'session.php';
 							name="article_text" placeholder="HTML Text" rows="10"
 							maxlength="4000" required></textarea>
 						<span class="help-block">Use HTML to enter the article</span>
+					</div>
+				</div>
+
+				<!-- article keywords (for search) -->
+				<div class="form-group">
+					<label for="search_keywords" class="col-sm-2 control-label">Keywords<br>
+						(for Search Engines)
+					</label>
+					<div class="col-sm-10">
+						<textarea class="form-control" id="search_keywords"
+							name="search_keywords"
+							placeholder="Keywords (for Search Engines)" rows="3"
+							maxlength="4000" required></textarea>
+						<span class="help-block">Search Engines use these keywords to
+							relate this article with what people search for. Separate
+							multiple keywords with a space.</span>
 					</div>
 				</div>
 

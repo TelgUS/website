@@ -24,6 +24,7 @@
 			<p><a href="#">Advertise</a></p>
 			<p><a href="#">Media</a></p>
 			<p><a href="#">General</a></p>
+			<p><a href="#">Report Website Issues</a></p>
 		</div>
 	</div>
 	<p>&nbsp;</p>

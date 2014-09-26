@@ -8,18 +8,23 @@
 
 <body>
 
-	<div id="container">
-	
-		<?php require_once '/menu.php';?>
+	<?php require_once '/menu.php';?>
 
-		<div id="content">
+	<div class="container">
+	
+		<div class="content">
 			<h1>Page Heading</h1>
 
 			<p>Page content goes here.</p>
 		</div> <!-- content -->
 
-		<?php require_once "/footer.php"; ?>
 	</div> <!-- container -->
 
+	<?php require_once "/footer.php"; ?>
+
+	<!-- The below script highlights the menu selection -->
+	<script>
+	$("#menu_<selection>").addClass("active");
+	</script>
 </body>
 </html>

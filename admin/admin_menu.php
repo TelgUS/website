@@ -61,8 +61,8 @@
 			</ul>
 
 			<ul class="nav navbar-nav navbar-right">
-				<li id="logon_user" style="padding-top: 16px; font-weight: normal;">
-				  <?php echo $_SESSION ['logon_user']; ?></li>
+				<li id="user_name" style="padding-top: 16px; font-weight: normal;">
+				  <?php echo $_SESSION ['user_name']; ?></li>
 				<li id="menu_logout"><a href="/admin/logout.php">Logout</a></li>
 			</ul>
 
