@@ -69,6 +69,11 @@ if ($rows_inserted > 0) {
 function save_image($con, $article_id, $image_index, $image_file, $image_url) {
 	$image_dir = "../media/";
 	
+	// do nothing and return true if there is no image to save
+	if (empty ( $image_file ['name'] ) && empty ( $image_url )) {
+		return true;
+	}
+	
 	if (! empty ( $image_file ['name'] )) {
 		$image_extn = pathinfo ( $image_file ['name'], PATHINFO_EXTENSION );
 		
@@ -76,7 +81,7 @@ function save_image($con, $article_id, $image_index, $image_file, $image_url) {
 		$orig_file_name = $image_dir . $article_id . "-" . $image_index . "-orig." . $image_extn;
 		$resized_file_name = $image_dir . $article_id . "-" . $image_index . "." . $image_extn;
 		echo $image_file ['tmp_name'] . "\n";
-
+		
 		// Writes the photo to the server
 		if (move_uploaded_file ( $image_file ['tmp_name'], '../media/x.jpg' )) {
 			// resize file name
@@ -92,12 +97,13 @@ function save_image($con, $article_id, $image_index, $image_file, $image_url) {
 		} else {
 			return false;
 		}
-	} else {
-		if (! empty ( $image_url )) {
-			// download the image to $image_file
-			
-			return true; // or false
-		}
+	} elseif (! empty ( $image_url )) {
+		// download the image from the URL
+		// save the original image as a temporary file
+		// resize the image
+		// save the image
+		
+		return true; // or false
 	}
 	
 	return true;
