@@ -19,6 +19,7 @@ if (! empty ( $_GET ['page'] )) {
 
 <body>
 	<?php require_once '/menu.php';?>
+
 	<div class="container">
 
 		<div class="content">
@@ -35,16 +36,7 @@ if (! empty ( $_GET ['page'] )) {
 				</p>
 			</div>
 			<?php } // end Jumbotron display ?>
- <!-- HTML to write -->
- <a href="#" data-toggle="tooltip" title="Some tooltip text!">Hover over me</a>
- 
- <!-- Generated markup by the plugin -->
- <div class="tooltip top" role="tooltip">
-   <div class="tooltip-arrow"></div>
-   <div class="tooltip-inner">
-     Some tooltip text!
-   </div>
- </div>
+
 			<section class="main_articles">
 	  			<?php
 						$articles_displayed_count = $page * $articles_per_page;
@@ -55,6 +47,7 @@ if (! empty ( $_GET ['page'] )) {
 						
 						$con = db_connect ();
 						
+						// get number of active articles
 						$sql = "SELECT count(*) FROM articles
 							WHERE sysdate() BETWEEN start_date AND ifnull(end_date, '9999-12-31')";
 						$result = get_sql_result ( $con, $sql );
@@ -85,15 +78,15 @@ if (! empty ( $_GET ['page'] )) {
 							echo "<article class='panel panel-default'>\n";
 							echo "  <header class='panel-heading'>\n";
 							echo "    <div class='row'>\n";
-							echo "      <div class='col-md-9'><a href='article.php?id=" . $row ['article_id'] . "'>" . $row ['title'] . "</a></div>\n";
-							echo "      <div class='col-md-1'>\n";
+							echo "      <div class='col-md-6'><a href='article.php?id=" . $row ['article_id'] . "'>" . $row ['title'] . "</a></div>\n";
+							echo "      <div class='col-md-2'>\n";
 							echo "          <div id='comments_" . $row ['article_id'] . "' title='Comments' data-toggle='tooltip' data-placement='bottom'><a href='article.php?id=" . $row ['article_id'] . "'><span class='glyphicon glyphicon-comment'> $comments_count</span></a></div>";
 							echo "      </div>\n";
-							echo "      <div class='col-md-1'>\n";
+							echo "      <div class='col-md-2'>\n";
 							echo "          <div id='images_" . $row ['article_id'] . "' title='Photos'><a href='article.php?id=" . $row ['article_id'] . "'><span class='glyphicon glyphicon-camera'> $images_count</span></a></div>\n";
 							echo "      </div>\n";
-							echo "      <div class='col-md-1'>";
-							echo "        <small><time datetime='" . $row ['start_date'] . "'>" . date ( "m/d/y", strtotime ( $row ['start_date'] ) ) . "</time></small>\n";
+							echo "      <div class='col-md-2'>";
+							echo "        <small><time datetime='" . $row ['start_date'] . "'>" . date ( "M d, Y", strtotime ( $row ['start_date'] ) ) . "</time></small>\n";
 							echo "      </div>\n";
 							echo "    </div>\n";
 							echo "  </header>\n";

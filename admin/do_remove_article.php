@@ -16,9 +16,9 @@ mysqli_stmt_execute ( $stmt ) or die ( "Unable to execute SQL statement for User
 $rows_affected = mysqli_stmt_affected_rows ( $stmt );
 
 // Delete Images from the file system
-$result = get_sql_result ( $con, "SELECT image_file_name FROM article_images WHERE article_id = " . $_POST ['article_id'] ) or die ( "Unable to query images for Article" );
+$result = get_sql_result ( $con, "SELECT orig_image_name FROM article_images WHERE article_id = " . $_POST ['article_id'] ) or die ( "Unable to query images for Article" );
 while ( $row = mysqli_fetch_array ( $result ) ) {
-	unlink ( "../media/" . $row ['image_file_name'] );
+	unlink ( "../media/" . $row ['orig_image_name'] );
 }
 
 // Delete Images for the Article

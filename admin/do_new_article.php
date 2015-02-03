@@ -71,25 +71,43 @@ function save_image($con, $article_id, $image_index, $image_file, $image_url) {
 	
 	// do nothing and return true if there is no image to save
 	if (empty ( $image_file ['name'] ) && empty ( $image_url )) {
+		echo "no image to save. image index $image_index <br>";
 		return true;
 	}
 	
 	if (! empty ( $image_file ['name'] )) {
+		echo "image is not empty<br>";
 		$image_extn = pathinfo ( $image_file ['name'], PATHINFO_EXTENSION );
 		
 		// generate names for the image files
 		$orig_file_name = $image_dir . $article_id . "-" . $image_index . "-orig." . $image_extn;
 		$resized_file_name = $image_dir . $article_id . "-" . $image_index . "." . $image_extn;
-		echo $image_file ['tmp_name'] . "\n";
+		echo $image_file ['tmp_name'] . "<br>";
 		
 		// Writes the photo to the server
-		if (move_uploaded_file ( $image_file ['tmp_name'], '../media/x.jpg' )) {
-			// resize file name
+		if (move_uploaded_file ( $image_file ['tmp_name'], '../media/' . $orig_file_name )) {
+			// figure out the width and height of the resized image
+			list ( $orig_width, $orig_height, $image_type, $image_attr ) = getimagesize ( $orig_file_name );
+			
+			$ratio_orig = $orig_width / $orig_height;
+			$width = 500;
+			$height = 500;
+			
+			if ($width / $height > $ratio_orig) {
+				$width = $height * $ratio_orig;
+			} else {
+				$height = $width / $ratio_orig;
+			}
+			
+			// resize the image
 			// resize_image ( $orig_file_name, $resized_file_name );
+			$resizeObj = new resize ( $orig_file_name );
+			$resizeObj->resizeImage ( $width, $height, "auto" );
+			$resizeObj->saveImage ( $resized_file_name, 100 );
 			
 			// save image metadata to the database
-			$stmt = mysqli_prepare ( $con, "INSERT INTO article_images (article_id, image_file_name) VALUES (?, ?)" ) or die ( "Unable to prepare SQL statement to save image metadata" );
-			mysqli_stmt_bind_param ( $stmt, "is", $article_id, $target ) or die ( "Unable to bind parameters to save image metadata" );
+			$stmt = mysqli_prepare ( $con, "INSERT INTO article_images (article_id, orig_image_name, resized_image_name) VALUES (?, ?, ?)" ) or die ( "Unable to prepare SQL statement to save image metadata" );
+			mysqli_stmt_bind_param ( $stmt, "iss", $article_id, $orig_file_name, $resized_file_name ) or die ( "Unable to bind parameters to save image metadata" );
 			mysqli_stmt_execute ( $stmt ) or die ( "Unable to execute SQL statement to save image metadata" );
 			$rows_inserted = mysqli_stmt_affected_rows ( $stmt );
 			
